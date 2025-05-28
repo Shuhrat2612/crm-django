@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="login-page">
+    <div class="auth-container">
+        <h2 class="text-center">
+            <i class="fas fa-user-circle"></i>
+            <div>Welcome Back</div>
+        </h2>
+        
+        {% if form.errors %}
+        <div class="alert alert-error">
+            Please correct the errors below.
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+            </button>
+        </form>
+        
+        <div class="auth-links">
+            <div class="mb-3">
+                <a href="{% url 'account_reset_password' %}">
+                    <i class="fas fa-key me-1"></i>Forgot Password?
+                </a>
+            </div>
+            <div>
+                New to CRM? 
+                <a href="{% url 'account_signup' %}">
+                    <i class="fas fa-user-plus me-1"></i>Create Account
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

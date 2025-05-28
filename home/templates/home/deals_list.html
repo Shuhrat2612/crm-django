@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Deals</h2>
+    <a href="{% url 'deals-add' %}" class="btn btn-primary mb-3">Add Deal</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Lead</th>
+                <th>Value</th>
+                <th>Status</th>
+                <th>Expected Close Date</th>
+                <th>Assigned To</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for deal in deals %}
+            <tr>
+                <td>{{ deal.title }}</td>
+                <td>{{ deal.lead.customer.name }}</td>
+                <td>{{ deal.value }}</td>
+                <td>{{ deal.get_status_display }}</td>
+                <td>{{ deal.expected_close_date }}</td>
+                <td>{{ deal.assigned_to }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No deals found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if is_paginated %}
+    <nav>
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %} 

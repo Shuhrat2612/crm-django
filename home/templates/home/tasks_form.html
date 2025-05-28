@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-tasks text-primary me-2"></i>{{ title|default:"Add Task" }}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="crm-form">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                {{ form.title|as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                {{ form.description|as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.due_date|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.priority|as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.status|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.assigned_to|as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.customer|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.deal|as_crispy_field }}
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <a href="{% url 'tasks-list' %}" class="btn btn-secondary me-2">
+                                <i class="fas fa-times me-1"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i>Save Task
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize datetime picker if browser doesn't support native datetime-local
+    document.addEventListener('DOMContentLoaded', function() {
+        var dueDateInput = document.querySelector('input[name="due_date"]');
+        if (dueDateInput.type !== 'datetime-local') {
+            // If browser doesn't support datetime-local, you might want to add a fallback datetime picker here
+            console.log('Browser does not support native datetime-local');
+        }
+    });
+</script>
+{% endblock %} 
