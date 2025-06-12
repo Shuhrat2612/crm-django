@@ -4,6 +4,5 @@ services:
     command: gunicorn crm.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
-      - ./db.sqlite3:/app/db.sqlite3  # db faylni alohida volume qilamiz
     ports:
       - "8000:8000"
