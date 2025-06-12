@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Customer | CRM System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4 text-primary">
+                <i class="fas fa-user-plus me-2"></i>Add New Customer
+            </h3>
+
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle me-1"></i> Please correct the errors below.
+            </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+
+                <div class="mt-4 d-flex justify-content-start gap-3">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-1"></i> Save
+                    </button>
+                    <a href="{% url 'customer-list' %}" class="btn btn-secondary">
+                        <i class="fas fa-times me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

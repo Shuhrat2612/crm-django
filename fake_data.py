@@ -3,7 +3,7 @@ import django
 import random
 from faker import Faker
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "home.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crm.settings")
 django.setup()
 
 from home.models import Customer, Lead, Deal, Task, Note
