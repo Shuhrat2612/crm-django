@@ -1,44 +1,49 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block title %}Login | CRM System{% endblock %}
+
 {% block content %}
 <div class="login-page">
     <div class="auth-container">
-        <h2 class="text-center">
-            <i class="fas fa-user-circle"></i>
-            <div>Welcome Back</div>
+        <h2 class="text-center mb-4">
+            <i class="fas fa-user-circle d-block mb-2"></i>
+            <span>Welcome Back</span>
         </h2>
-        
+
         {% if form.errors %}
         <div class="alert alert-error">
-            Please correct the errors below.
+            <strong><i class="fas fa-exclamation-circle me-1"></i>Oops!</strong> Please fix the errors below.
         </div>
         {% endif %}
 
-        <form method="POST" action="{% url 'account_login' %}">
+        <form method="POST" action="{% url 'account_login' %}" novalidate>
             {% csrf_token %}
             {{ form|crispy }}
+
             {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
             {% endif %}
-            <button class="btn btn-primary" type="submit">
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">
                 <i class="fas fa-sign-in-alt me-2"></i>Sign In
             </button>
         </form>
-        
+
+        <div class="divider"><span>or</span></div>
+
         <div class="auth-links">
-            <div class="mb-3">
-                <a href="{% url 'account_reset_password' %}">
-                    <i class="fas fa-key me-1"></i>Forgot Password?
-                </a>
-            </div>
-            <div>
-                New to CRM? 
+            <p class="mb-2">
+                <i class="fas fa-key me-1"></i>
+                <a href="{% url 'account_reset_password' %}">Forgot your password?</a>
+            </p>
+            <p>
+                New here?
                 <a href="{% url 'account_signup' %}">
-                    <i class="fas fa-user-plus me-1"></i>Create Account
+                    <i class="fas fa-user-plus me-1"></i> Create an account
                 </a>
-            </div>
+            </p>
         </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}
