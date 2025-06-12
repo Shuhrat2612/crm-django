@@ -1,23 +1,45 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block title %}Sign Up | CRM System{% endblock %}
+
 {% block content %}
-<div class="auth-container">
-    <h2>
-        <i class="fas fa-user-plus text-primary"></i>
-        Sign Up
-    </h2>
-    <form method="post" action="{% url 'account_signup' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+<div class="login-page">
+    <div class="auth-container">
+        <h2 class="text-center mb-4">
+            <i class="fas fa-user-plus d-block text-primary mb-2"></i>
+            <span>Create Your Account</span>
+        </h2>
+
+        {% if form.errors %}
+        <div class="alert alert-error">
+            <strong><i class="fas fa-exclamation-triangle me-1"></i>Oops!</strong> Please fix the errors below.
+        </div>
         {% endif %}
-        <button class="btn btn-primary" type="submit">Sign Up</button>
-    </form>
-    <div class="auth-links">
-        <span>Already have an account?</span>
-        <a href="{% url 'account_login' %}">Login</a>
+
+        <form method="POST" action="{% url 'account_signup' %}" novalidate>
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">
+                <i class="fas fa-user-plus me-2"></i>Sign Up
+            </button>
+        </form>
+
+        <div class="divider"><span>or</span></div>
+
+        <div class="auth-links">
+            <p class="mb-0">
+                Already have an account?
+                <a href="{% url 'account_login' %}">
+                    <i class="fas fa-sign-in-alt me-1"></i>Login here
+                </a>
+            </p>
+        </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}
